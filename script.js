@@ -1,6 +1,8 @@
 // Locate DOM layout elements by their specific ID attributes
 const button = document.getElementById('colorBtn');
 const colorText = document.getElementById('colorCode');
+const likeButton = document.getElementById('likeBtn');
+const likedPaletteContainer = document.getElementById('likedPalette');
 
 /**
  * Generates a completely random 6-character HEX color code.
@@ -33,6 +35,28 @@ colorText.addEventListener('click', function(event) {
 
     // Run star visual engine matching precise mouse coordinate positions
     createStarExplosion(event.clientX, event.clientY);
+});
+
+// Handle Liking Colors
+likeButton.addEventListener('click', function() {
+    const activeColor = colorText.textContent;
+
+    // Build a brand-new circular bubble container element
+    const colorBubble = document.createElement('div');
+    colorBubble.className = 'palette-circle';
+    colorBubble.style.backgroundColor = activeColor;
+
+    // Embed the text attribute so we can recall the exact HEX value later
+    colorBubble.title = activeColor;
+
+    // Click on a saved bubble to apply that background again
+    colorBubble.addEventListener('click', function() {
+        document.body.style.backgroundColor = activeColor;
+        colorText.textContent = activeColor;
+    });
+
+    // Mount the bubble into the lower dashboard zone
+    likedPaletteContainer.appendChild(colorBubble);
 });
 
 /**

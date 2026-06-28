@@ -5,7 +5,9 @@ body {
     transition: background-color 0.5s;
 }
 button {
+    display: block;
     font-family: 'Times New Roman', Times, serif;
+    margin: 10px auto;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -33,4 +35,39 @@ button {
     user-select: none;
     z-index: 1000;
     transition: transform 0.8s ease-out, opacity 0.8s ease-out; /* Smoothly animate movement, scaling, and fading over 0.8 seconds */
+}
+
+/* Styling the Like Button */
+#likeBtn {
+    cursor: pointer;
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Layout layout configuration for our saved color items container */
+#likedPalette {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* Designing each individual color bubble saved below */
+.palette-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+    border: 3px solid white;
+}
+
+/* Zoom effect when hovering over your saved palette circles */
+.palette-circle:hover {
+    transform: scale(1.1);
 }
