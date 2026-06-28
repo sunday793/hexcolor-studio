@@ -1,0 +1,36 @@
+body {
+    font-family:'Times New Roman', Times, serif;
+    text-align: center;
+    padding-top: 50px;
+    transition: background-color 0.5s;
+}
+button {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#colorCode {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer; /* changes the mouse pointer to a hand */
+    display: inline-block;
+    transition: transform 0.1s;
+}
+
+/* Shrink the HEX text slightly when clicked to simulate a physical press */
+#colorCode:active {
+    transform: scale(0.95);
+}
+
+/* Star particle styling */
+.star {
+    position: fixed; /* Absolute tracking based on viewport screen space */
+    pointer-events: none; /* Prevent star elements from blocking mouse clicks */
+    font-size: 24px;
+    user-select: none;
+    z-index: 1000;
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out; /* Smoothly animate movement, scaling, and fading over 0.8 seconds */
+}
