@@ -37,7 +37,6 @@ button {
     transition: transform 0.8s ease-out, opacity 0.8s ease-out; /* Smoothly animate movement, scaling, and fading over 0.8 seconds */
 }
 
-/* Styling the Like Button */
 #likeBtn {
     cursor: pointer;
     background-color: #ff4b5c;
@@ -46,7 +45,7 @@ button {
     border-radius: 5px;
 }
 
-/* Layout layout configuration for our saved color items container */
+/* Layout configuration for saved color items container */
 #likedPalette {
     display: flex;
     justify-content: center;
@@ -58,6 +57,7 @@ button {
 
 /* Designing each individual color bubble saved below */
 .palette-circle {
+    position: relative; /* Allows the X button to sit perfectly inside/above the circle */
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -65,6 +65,38 @@ button {
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transition: transform 0.2s;
     border: 3px solid white;
+}
+
+/* Styling for the small X overlay button */
+.delete-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4b5c;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s, transform 0.2s;
+    user-select: none;
+}
+
+/* Reveal the delete button when the user hovers over the color circle */
+.palette-circle:hover .delete-btn {
+    opacity: 1;
+}
+
+/* Slight scale effect when hovering over the X button specifically */
+.delete-btn:hover {
+    transform: scale(1.2);
+    background-color: #e03b4b;
 }
 
 /* Zoom effect when hovering over your saved palette circles */

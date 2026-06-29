@@ -42,18 +42,45 @@ colorText.addEventListener('click', function(event) {
 
 // Creating and displaying a bubble
 function renderColorBubble(colorValue) {
+    // Creating the main color circle container
     const colorBubble = document.createElement('div');
     colorBubble.className = 'palette-circle';
     colorBubble.style.backgroundColor = colorValue;
     colorBubble.title = colorValue; 
+
+    // Creating the inner delete cross element
+    const deleteBtn = document.createElement('div');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.textContent = '×';
 
     // Click on a saved bubble to apply that background color again
     colorBubble.addEventListener('click', function() {
         document.body.style.backgroundColor = colorValue;
         colorText.textContent = colorValue;
     });
+
+    // Core individual deletion logic
+    deleteBtn.addEventListener('click', function(event) {
+        /* 
+           Crucial: Stop the click event from bubbling up to the colorBubble.
+           Without this, clicking the 'X' would also trigger the bubble's click 
+           and accidentally change the page background to the color that are being deleted!
+        */
+       event.stopPropagation();
+       // Filter out this specific color code from the runtime array
+       savedColors = savedColors.filter(function(color) {
+        return color !== colorValue;
+       });
+
+       // Saving the freshly filtered, shortened array back to the hard drive
+       localStorage.setItem('hexColorStudioPalette', JSON.stringify(savedColors));
+
+       // Physically strip this element completely off the webpage DOM layout
+       colorBubble.remove();
+    });
     
-    // Mount the bubble into the lower dashboard zone
+    // Nest the delete button inside the bubble, then mount the bubble to the dashboard
+    colorBubble.appendChild(deleteBtn);
     likedPaletteContainer.appendChild(colorBubble);
 }
 
