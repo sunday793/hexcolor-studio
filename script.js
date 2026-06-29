@@ -4,6 +4,9 @@ const colorText = document.getElementById('colorCode');
 const likeButton = document.getElementById('likeBtn');
 const likedPaletteContainer = document.getElementById('likedPalette');
 
+// Initializing saved colors array by loading from localStorage , or creating an empty array if none exists
+let savedColors = JSON.parse(localStorage.getItem('hexColorStudioPalette')) || [];
+
 /**
  * Generates a completely random 6-character HEX color code.
  * Safe-guarded with padStart to prevent invalid shorter string codes.
@@ -37,27 +40,44 @@ colorText.addEventListener('click', function(event) {
     createStarExplosion(event.clientX, event.clientY);
 });
 
-// Handle Liking Colors
+// Creating and displaying a bubble
+function renderColorBubble(colorValue) {
+    const colorBubble = document.createElement('div');
+    colorBubble.className = 'palette-circle';
+    colorBubble.style.backgroundColor = colorValue;
+    colorBubble.title = colorValue; 
+
+    // Click on a saved bubble to apply that background color again
+    colorBubble.addEventListener('click', function() {
+        document.body.style.backgroundColor = colorValue;
+        colorText.textContent = colorValue;
+    });
+    
+    // Mount the bubble into the lower dashboard zone
+    likedPaletteContainer.appendChild(colorBubble);
+}
+
+// Handle liking colors
 likeButton.addEventListener('click', function() {
     const activeColor = colorText.textContent;
 
-    // Build a brand-new circular bubble container element
-    const colorBubble = document.createElement('div');
-    colorBubble.className = 'palette-circle';
-    colorBubble.style.backgroundColor = activeColor;
-
-    // Embed the text attribute so we can recall the exact HEX value later
-    colorBubble.title = activeColor;
-
-    // Click on a saved bubble to apply that background again
-    colorBubble.addEventListener('click', function() {
-        document.body.style.backgroundColor = activeColor;
-        colorText.textContent = activeColor;
-    });
-
-    // Mount the bubble into the lower dashboard zone
-    likedPaletteContainer.appendChild(colorBubble);
+    // Check for duplicates before saving
+    if (!savedColors.includes(activeColor)) {
+        savedColors.push(activeColor); 
+        
+        // Save to the computer's hard drive
+        localStorage.setItem('hexColorStudioPalette', JSON.stringify(savedColors));
+        
+        // Use reusable function to draw it on the screen
+        renderColorBubble(activeColor);
+    }
 });
+
+
+// Load and display previously saved colors when the page loads
+savedColors.forEach(function(color) {
+    renderColorBubble(color);
+}) ;
 
 /**
  * Spawns multiple star particles that shoot outwards from the mouse position
